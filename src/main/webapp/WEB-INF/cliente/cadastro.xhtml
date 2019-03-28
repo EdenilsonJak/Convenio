@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="frmCadastro" prependId="false">
+
+		<p:messages autoUpdate="true" closable="true" />
+
+
+		<ui:include src="/WEB-INF/cliente/BotoesCadastroCliente.xhtml" />
+
+		<p:panelGrid columns="4" id="painel1"
+			style="width: 100%; margin-top: 20px"
+			columnClasses="rotulo, campo, rotulo, campo">
+
+			<p:outputLabel value="Código"
+				rendered="#{cadastroClienteBean.cliente.existente}" />
+			<h:outputText value="#{cadastroClienteBean.cliente.id_cliente}"
+				rendered="#{cadastroClienteBean.cliente.existente}" />
+
+			<p:outputLabel value="Data Cadastro"
+				rendered="#{cadastroClienteBean.cliente.existente}" />
+			<h:outputText value="#{cadastroClienteBean.cliente.data}"
+				rendered="#{cadastroClienteBean.cliente.existente}">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:outputText>
+
+			<p:outputLabel value="Nome Cliente" for="nome" />
+			<p:inputText id="nome" size="50" maxlength="80"
+				value="#{cadastroClienteBean.cliente.nome}" />
+
+			<p:outputLabel value="CPF" for="cpf" />
+			<p:inputMask mask="999.999.999-99" id="cpf"
+				value="#{cadastroClienteBean.cliente.cpf}" size="9" />
+
+			<p:outputLabel value="Data Nascimento" for="data_nasc" />
+			<p:calendar id="data_nasc" showButtonPanel="true" size="6"
+				mask="true" showOn="button" type="button" pattern="dd/MM/yyyy"
+				value="#{cadastroClienteBean.cliente.dt_nascimento}">
+			</p:calendar>
+
+			<p:outputLabel value="Sexo" for="sexo" />
+			<p:selectOneMenu id="sexo"
+				value="#{cadastroClienteBean.cliente.sexo}">
+				<f:selectItem itemLabel="Masculino" itemValue="M" />
+				<f:selectItem itemLabel="Feminino" itemValue="F" />
+			</p:selectOneMenu>
+
+			<p:outputLabel value="CEP:" for="cep" />
+			<p:inputMask mask="99.999-999" id="cep" size="7"
+				value="#{cadastroClienteBean.cliente.cep}">
+				<p:ajax event="change" process="@this"
+					listener="#{cadastroClienteBean.consultaCep}"
+					update="endereco bairro estado cidade logradouro" />
+			</p:inputMask>
+
+			<p:outputLabel value="Logradouro" for="logradouro" />
+			<p:inputText id="logradouro" size="50"
+				value="#{cadastroClienteBean.cliente.tipoLogradouro}" />
+
+
+			<p:outputLabel value="Endereço" for="endereco" />
+			<p:inputText id="endereco" size="50"
+				value="#{cadastroClienteBean.cliente.logradouro}" />
+
+			<p:outputLabel value="Número" for="numero" />
+			<p:inputText id="numero" size="5"
+				value="#{cadastroClienteBean.cliente.numero}" />
+
+			<p:outputLabel value="Bairro" for="bairro" />
+			<p:inputText id="bairro" size="40"
+				value="#{cadastroClienteBean.cliente.bairro}" />
+
+			<p:outputLabel value="Complemento" for="complemento" />
+			<p:inputText id="complemento" size="45"
+				value="#{cadastroClienteBean.cliente.complemento}" />
+
+			<p:outputLabel value="Estado" for="estado" />
+			<p:inputText id="estado" value="#{cadastroClienteBean.cliente.uf}" />
+
+			<p:outputLabel value="Cidade" for="cidade" />
+			<p:inputText id="cidade"
+				value="#{cadastroClienteBean.cliente.cidade}" />
+
+			<p:outputLabel value="Celular" for="telefone" />
+			<p:inputMask mask="(99)99999-9999" id="telefone" size="10"
+				value="#{cadastroClienteBean.cliente.phone1}" />
+
+			<p:outputLabel value="Telefone fixo" for="fixo" />
+			<p:inputMask mask="(99)9999-9999" id="fixo" size="10"
+				value="#{cadastroClienteBean.cliente.phone2}" />
+
+			<p:outputLabel value="Status" for="status" />
+			<p:selectOneMenu id="status"
+				value="#{cadastroClienteBean.cliente.status}">
+				<f:selectItem itemLabel="Ativo" itemValue="Ativo" />
+				<f:selectItem itemLabel="Inativo" itemValue="Inativo" />
+			</p:selectOneMenu>
+
+		</p:panelGrid>
+
+		<p:tabView style="margin-top: 10px" dynamic="true" cache="true">
+
+			<p:tab title="Dependentes">
+				<ui:include src="/WEB-INF/cliente/dependente.xhtml" />
+
+			</p:tab>
+		</p:tabView>
+
+	</h:form>
+
+
+</ui:composition>

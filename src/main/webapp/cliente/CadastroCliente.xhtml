@@ -1,0 +1,37 @@
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">TESTE</ui:define>
+
+	<ui:define name="centro">
+		<f:metadata>
+			<f:viewParam name="damy" />
+			<o:viewParam name="cliente" value="#{cadastroClienteBean.cliente}" />
+			<f:event listener="#{cadastroClienteBean.inicializar}"
+				type="preRenderView" />
+		</f:metadata>
+
+			<p:panel header="Cadastro de Cliente" style="text-align:left" id="painelCadastro">
+
+				<p:tabView style="margin-top: 10px" id="tabPanelWidget"
+					dynamic="true" cache="false"
+					activeIndex="#{cadastroClienteBean.activeIndex}">
+					
+					<p:tab id="tabCadastro" title="Cadastro">
+						<ui:include src="/WEB-INF/cliente/cadastro.xhtml" />
+					</p:tab>
+					<p:tab id="tabConsulta" title="Consulta">
+						<ui:include src="/cliente/PesquisaCliente.xhtml"/>
+					</p:tab>
+					
+				</p:tabView>
+				
+			</p:panel>	
+	</ui:define>
+	
+</ui:composition>
+

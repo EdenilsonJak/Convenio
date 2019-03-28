@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:view contentType="text/html">
+	<h:head>
+
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+			<title>Sistema de Contratos</title>
+		</f:facet>
+
+		<link rel="shortcut icon" type="image/x-icon" href="#{resource['images:favicon.ico']}"/>
+	
+		<!-- <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/default.css" />
+		<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/syntaxhighlighter/syntaxhighlighter.css" />
+ -->
+		<style type="text/css">
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+</style>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="titulo">Sistemas de criação de Layouts</ui:insert></title>
+		
+		<h:outputStylesheet library="css" name="sistema.css"></h:outputStylesheet>
+		
+		<h:outputScript library="js" name="Data.js"></h:outputScript>
+		<h:outputScript library="js" name="Ceps.js"></h:outputScript>
+		<h:outputScript library="js" name="jquery.maskMoney.js"/>
+		<h:outputScript library="js" name="maskMoney.js"/>
+		
+		
+		
+	</h:head>
+	<h:body>
+		<div align="center" class="ui-fluid">
+			<p:layout fullPage="true">
+				<p:layoutUnit position="north" size="45" styleClass="topo">
+					<div style="float: left; margin-bottom: 0px">
+						<span style="margin-right: 100px">
+						<h:link outcome="/Home">
+							<h:graphicImage name="logo36.png" library="images" />
+						</h:link>
+						</span>
+					</div>
+					<div style="float: right; margin-right: 100px">
+						<span style="float: left; height: 30px; line-height: 30px;">
+							<p:link value="Sair" href="/j_spring_security_logout"/>
+						</span>
+					</div>
+					<div style="float: right; margin-right: 100px">
+						<span style="float: left; height: 30px; line-height: 30px; margin-right: 30px">
+							Olá #{seguranca.nomeUsuario}!
+						</span>
+					</div>
+				</p:layoutUnit>
+
+				<p:layoutUnit id="left" position="west" size="230"
+					styleClass="esquerdo" resizable="true" closable="true"
+					collapsible="true" header="Menu Sistemas">
+					<ui:insert name="menu">
+						<h:form>
+							<p:accordionPanel dynamic="true" cache="true" 
+								style="aria-expanded: false">
+								<p:tab title="Cadastro de Clientes">
+									<h:panelGrid >
+										<h:commandLink value="Cadastrar Clientes"
+											action="/cliente/CadastroCliente.xhtml" />
+									</h:panelGrid>
+								</p:tab>
+								<p:tab title="Gerenciar Convênio">
+									<h:panelGrid>
+										<h:commandLink value="Convênios"
+											action="/convenio/CadastroConvenio.xhtml"/>
+									</h:panelGrid>
+								</p:tab>
+								<p:tab title="Financeiro">
+									<h:panelGrid>
+										<h:commandLink value="Recibos"
+											action="/recibo/CadastroRecibo.xhtml"/>
+									</h:panelGrid>
+								</p:tab>
+								<p:tab title="Ferramentas">
+									<h:panelGrid>
+										<h:commandLink value="Manutenção do banco"
+											action="/ferramentas/CopiadeSeguranca.xhtml"/>
+									</h:panelGrid>
+								</p:tab>
+							</p:accordionPanel>
+						</h:form>
+					</ui:insert>
+				</p:layoutUnit>
+				<p:layoutUnit position="center" styleClass="centro"
+					resizable="false" closable="false">
+					<ui:insert name="centro">
+                       	
+                    </ui:insert>
+				</p:layoutUnit>
+			</p:layout>
+		</div>
+		
+		</h:body>
+</f:view>
+</html>

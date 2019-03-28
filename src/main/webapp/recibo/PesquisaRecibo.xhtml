@@ -1,0 +1,229 @@
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+
+	<ui:define name="titulo">Recibos</ui:define>
+
+	<ui:define name="centro">
+
+		<f:metadata>
+			<f:viewParam name="damy" />
+		</f:metadata>
+
+		<p:panel header="Pesquisa de Recibos" style="text-align:left">
+
+			<h:form id="frmCadastroCliente" prependId="false" target="_blank">
+				<ui:include src="/WEB-INF/recibo/BotoesPesquisaRecibo.xhtml" />
+
+				<p:panelGrid columns="2" id="painel"
+					style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+					<p:outputLabel value="Nome Cliente" for="cliente" />
+					<p:autoComplete id="cliente"
+						value="#{pesquisaReciboBean.filtro.cliente}" size="50"
+						completeMethod="#{pesquisaReciboBean.completarCliente}"
+						var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}"
+						forceSelection="true">
+					</p:autoComplete>
+
+					<p:outputLabel value="Data de Cadastro" />
+					<h:panelGroup>
+						<p:calendar size="7" pattern="dd/MM/yyyy" mask="true"
+							showOn="button" value="#{pesquisaReciboBean.filtro.datade}" />
+						a
+			<p:calendar size="7" pattern="dd/MM/yyyy" mask="true" showOn="button"
+							value="#{pesquisaReciboBean.filtro.dateate}" />
+					</h:panelGroup>
+
+					<p:outputLabel value="Vencimento" />
+					<h:panelGroup>
+						<p:calendar size="7" pattern="dd/MM/yyyy" mask="true"
+							showOn="button" value="#{pesquisaReciboBean.filtro.vencimento}" />
+						a
+			<p:calendar size="7" pattern="dd/MM/yyyy" mask="true" showOn="button"
+							value="#{pesquisaReciboBean.filtro.vencimentoate}" />
+					</h:panelGroup>
+
+					<p:outputLabel value="Status" for="status" />
+					<p:selectOneMenu id="status"
+						value="#{pesquisaReciboBean.filtro.status}">
+						<f:selectItem itemLabel="Selecione..." itemValue=""/>
+						<f:selectItem itemLabel="Pendente" itemValue="Pendente" />
+						<f:selectItem itemLabel="Pago" itemValue="Pago" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+
+				<p:spacer />
+
+				<p:dataTable emptyMessage="Nenhum Recibo Encontrado."
+					draggableColumns="true" draggableRows="true"
+					value="#{pesquisaReciboBean.contasFiltrados}" paginator="true"
+					rows="10" paginatorAlwaysVisible="false" var="contas" id="conta"
+					rowIndexVar="linha" paginatorPosition="bottom">
+					<f:facet name="header">
+						CONSULTA DE RECIBOS
+					</f:facet>
+					<p:column headerText="Cotratante">
+						<h:outputText value="#{contas.contrato.cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="Data Cadastro" style="text-align: center">
+						<h:outputText value="#{contas.dt_emissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Data Vencimento" style="text-align: center">
+						<h:outputText value="#{contas.dt_vencimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Data Pagamento" style="text-align: center">
+						<h:outputText value="#{contas.dt_pgto}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Valor do Recibo">
+						<h:outputText value="#{contas.vlr}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Valor Pago">
+						<h:outputText value="#{contas.vlrPago}">
+							<f:convertNumber pattern="#,##0.00" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Status" style="text-align: center">
+						<h:outputText value="#{contas.status}"
+							style="#{contas.pendente ? 'color : red' : 'color : blue'} " />
+							
+					<h:graphicImage library="images" name="alerta.png" id="pendente"
+							style="vertical-align: bottom; margin-left: 5px"
+							rendered="#{contas.pendente}" />
+
+						<p:tooltip for="pendente" value="Pendência"
+							rendered="#{contas.pendente}" />
+				
+					</p:column>
+
+					<p:column headerText="Forma de Pagamento"
+						style="text-align: center">
+						<h:outputText value="#{contas.tipopgto}" />
+					</p:column>
+
+					<p:column style="text-align: center" headerText="Ações">
+						<p:commandButton icon="check-icon" title="Receber"
+							immediate="true" oncomplete="PF('pagamentoDialog').show()"
+							process="@this" disabled="#{contas.pago}"
+							update=":frmCadastroCliente:dialogReceber">
+							<f:setPropertyActionListener
+								target="#{pesquisaReciboBean.recibo}" value="#{contas}" />
+						</p:commandButton>
+						<p:commandButton icon="imprimir-icon" title="Imprimir Recibo"
+							action="#{cadastroReciBean.imprimirRecibo(contas.id_recibo)}"
+							ajax="false" />
+					</p:column>
+
+					<p:columnGroup type="footer">
+						<p:row>
+						<p:column colspan="4" style="text-align:right"
+								footerText="Total:" />
+							<p:column>
+								<f:facet name="footer">
+									<h:outputText value="R$#{pesquisaReciboBean.totalRecibosPendentes}">
+										<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="footer">
+									<h:outputText value="R$#{pesquisaReciboBean.totalRecibosPagos}">
+										<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="footer">
+									<h:outputText value="R$#{pesquisaReciboBean.totalRecibos}">
+										<f:convertNumber pattern="#,##0.00" />
+									</h:outputText>
+								</f:facet>
+							</p:column>
+							
+							
+							<p:column colspan="2">
+								
+							</p:column>
+						</p:row>
+					</p:columnGroup>
+
+					<f:facet name="footer">
+						<h:outputText value="Existem " />
+						<h:outputText
+							value="#{fn:length(pesquisaReciboBean.contasFiltrados)}" />
+						<h:outputText value=" recibos cadastrados. " />
+					</f:facet>
+
+				</p:dataTable>
+
+				<p:dialog
+					header="#{pesquisaReciboBean.recibo.contrato.cliente.nome}"
+					widgetVar="pagamentoDialog" id="dialogReceber" resizable="false">
+
+					<h:panelGroup id="dialogReceberPanel">
+						<p:messages autoUpdate="false" />
+
+						<p:panelGrid columns="4" columnClasses="rotulo, campo">
+
+							<p:outputLabel value="Data Cadastro" />
+							<h:outputText value="#{pesquisaReciboBean.recibo.dt_emissao}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+
+							<p:outputLabel value="Data Vencimento" />
+							<h:outputText value="#{pesquisaReciboBean.recibo.dt_vencimento}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+
+							<p:outputLabel value="Data Pagamento" for="dtapgo" />
+							<p:calendar id="dtapgo" locale="pt_BR" showButtonPanel="true"
+								value="#{pesquisaReciboBean.recibo.dt_pgto}" size="7"
+								pattern="dd/MM/yyyy" mask="true" showOn="button">
+							</p:calendar>
+
+							<p:outputLabel value="Valor do Recibo" />
+							<h:outputText value="#{pesquisaReciboBean.recibo.vlr}">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:outputText>
+
+							<p:outputLabel value="Valor à Receber" />
+							<h:inputText value="#{pesquisaReciboBean.recibo.vlrPago}"
+								onfocus="maskMoney(this)">
+								<f:convertNumber pattern="#,##0.00" />
+							</h:inputText>
+
+						</p:panelGrid>
+
+						<div style="margin-top: 5px">
+							<p:commandButton value="Receber" process="dialogReceber" icon="check-icon"
+								oncomplete="if(args.sucesso == true) PF('pagamentoDialog').hide()"
+								action="#{pesquisaReciboBean.salvar}"
+								update=":frmCadastroCliente:conta dialogReceberPanel" />
+						</div>
+
+
+					</h:panelGroup>
+
+				</p:dialog>
+
+
+			</h:form>
+
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

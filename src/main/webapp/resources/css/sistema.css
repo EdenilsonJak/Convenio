@@ -1,0 +1,380 @@
+@CHARSET "utf-8";
+
+html {
+    height: 100%;
+}
+
+body {
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0px;
+	font-weight: normal;
+	width: 100%;
+    height: 100%;
+    background-color: #f7f7f7;
+}
+
+
+header{
+	padding: 5px 0px;
+	margin-bottom: 20px;
+	height: 30px;
+	
+	background-color: #006699;
+	color: #fff;
+	
+	box-shadow: 0px 2px 2px #ccc;
+	
+}
+
+.usd{
+	background: url("#{resource['images/usd.png']}") !important;
+}
+
+.check-icon{
+	background: url("#{resource['images/check.png']}") !important;
+}
+
+.imprimir-icon{
+	background: url("#{resource['images/print.png']}") !important;
+}
+
+.pesquisar-icon{
+	background: url("#{resource['images/search.png']}") !important;
+}
+
+
+.novo-icon{
+	background: url("#{resource['images/add-file 16x16.png']}") !important;
+}
+
+.editar-icon{
+	background: url("#{resource['images/editar.png']}") !important;
+}
+
+.salvar-icon{
+	background: url("#{resource['images/save 16x16.png']}") !important;
+}
+
+.atualizar-icon{
+	background: url("#{resource['images/refresh 16x16.png']}") !important;
+}
+
+.delete-icon{
+	background: url("#{resource['images/delete.png']}") !important;
+}
+
+.menu-sistema .ui-icon-triangle-1-s {
+    background: url(#{resource['images:seta-para-baixo.png']}) no-repeat;
+}
+
+#conteudo{
+	padding: 0px 8px;
+}
+
+#Span_usuario{
+	color: #f2f2f2;
+}
+
+header > div{
+	margin-left: 8px
+}
+
+footer{
+	padding: 0px 8px;
+	margin-bottom: 10px
+}
+
+h1{
+	font-size: 24px;
+	font-weight: 500;
+	padding: 0px;
+	margin: 0px;
+}
+
+#login-dialog{
+	width: 290px;
+	margin: auto;
+	margin-top: 150px;
+}
+
+.grid-login{
+	background-color: #f2f2f2;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	margin-top: 9px;
+	padding: 10px;
+	
+}
+
+/* remove uma linha preta escrota da header das tabelas */
+th[role="columnheader"].ui-state-default {
+    border-color: #ccc !important;
+}
+
+/* corrige o texto dentro do inputswitch e o backgroud*/
+.ui-inputswitch-on {
+    background: none !important;
+    color: green;
+}
+
+.rotulo{
+	width: 150px
+}
+
+.ui-panelgrid td{
+	height: 34px
+}
+
+.ajax-status{
+	position: fixed;
+	top: 55px;
+	right: 10px;
+	width: 35px;
+	height: 35px;
+}
+
+.ui-selectmanycheckbox td {
+	border-width: 0px !important;
+	padding: 0px !important;
+}
+
+.ui-selectmanycheckbox td label{
+	padding-right: 10px;
+}
+
+.produto-tabela input{
+	width: 99%
+}
+
+.fornecedor-tabela input{
+	width: 99%
+}
+
+/* marcacao de qual tab esta selecionada */
+ul.ui-tabs-nav > li.ui-tabs-selected {
+    margin-top: -2px;
+    border-top: 3px solid #23b7e5 !important;
+}
+
+/* arruma o toggler da tree */
+span.ui-tree-toggler {
+    position: relative;
+    top: 3px;
+}
+
+/* arruma automaticamente o tamanho do label nos combos */
+.ui-selectonemenu-label {
+    width: auto !important;
+}
+
+/* remove aquele asterisco porco dos forms */
+.ui-outputlabel-rfi {
+    display: none;
+}
+
+/* remove todos os efeitos arredondadinhos dos elementos */
+.ui-corner-all, .ui-state-default {
+    border-radius: 0 !important;
+}
+.ui-selectonemenu-trigger {
+    border-radius: 0 !important;
+}
+
+/* remove linhas indesejadas nos widgets */
+.ui-state-default, .ui-widget-content div.ui-state-default, .ui-widget-header div.ui-state-default {
+    border-color: #ccc !important;
+}
+
+/* tira a sombra para que os botoes fiquem certos quando em widgets */
+.ui-widget-content button.ui-state-default {
+    box-shadow: none !important;
+}
+
+/* background quando com erro no label */
+label.ui-state-error {
+    background: none;
+}
+
+/* remove uma linha preta escrota da header das tabelas */
+th[role="columnheader"].ui-state-default {
+    border-color: #ccc !important;
+}
+
+/* remove icone de mensagens */
+.ui-messages ul {
+    margin: 0 !important;
+}
+.ui-messages span.ui-messages-info-icon {
+    display: none;
+}
+.ui-messages span.ui-messages-warn-icon { 
+    display: none;
+}
+.ui-messages span.ui-messages-error-icon { 
+    display: none;
+}
+
+
+/* corrige a borda do paginador das datatables */
+div.ui-paginator {
+    border: 1px solid #dddddd !important; 
+    border-top: 0px !important;
+}
+
+
+/* Customiza TabView - início */
+.ui-tabs .ui-tabs-panel{
+	padding: 0.5em 0.2em !important;
+}
+
+.ui-tabs{
+	padding: 0px !important;
+}
+
+.ui-tabs .ui-tabs-nav{
+	margin: -1px !important;
+}
+
+.ui-tabs.ui-tabs-top > .ui-tabs-nav{
+	padding: 0px !important;
+}
+/* Customiza TabView - fim */
+	
+/* Menu sistema inicio */
+.menu-sistema {
+    border: 0px !important;
+    padding: 0px !important;
+    background: none !important;
+    background-color: blue;
+}
+
+.menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
+    color: #ffffff !important;
+}
+
+
+
+/* Menu sistema fim */
+
+.ui-state-disabled{
+	opacity: .80 !important;
+}
+
+.ui-autocomplete-panel {
+	left: px !important;
+	max-width: 600px !important;
+	min-width: 600px !important;
+	overflow: hidden !important;
+}
+
+.ui-expanded-row-content .ui-widget-content tbody tr td{
+	overflow: hidden !important;
+	max-width: 800px !important;
+}
+
+.sqlDialogText {
+    display: block;
+    width: 600px; /* Optional, depends otherwise on parent. */
+    height: 300px;
+    overflow: auto;
+    color: green;
+}
+
+.topo > div span{
+	color: #f2f2f2;
+}
+
+.topo > div span a{
+	color: #f2f2f2;
+}
+
+.topo {
+	top: 0px !important;
+	left: 0px !important;
+	right: 0px !important;
+	border:  0px solid #7887EC;
+	border-radius: 0px;
+
+	margin-bottom: 20px;
+	height: 35px !important;
+	box-shadow: 0px 2px 2px #ccc;
+}
+
+.ui-layout-unit {
+    padding: 0.3em;
+}
+
+.topo > div{
+	margin-left: 5px;
+}
+
+.ui-layout-north > div{
+	background-color: #006699
+}
+.ui-layout-north{
+	background-color: #006699
+}
+
+.esquerdo{
+	left: 2px !important;
+	border:  1px solid #7887EC
+}
+
+.centro{
+	border:  1px solid #7887EC	
+}
+
+
+	
+.ui-layout-north .ui-layout-unit-content {
+	overflow:visible !important; 
+
+}
+
+fieldset{
+	padding: 1em;
+	float:left;
+	margin-right:0.1em; 
+	padding-top:0.2em;
+	text-align:left; 
+  	border:1px solid marrow;
+}
+
+.ui-datagrid{
+	border: none !important;
+}  
+.ui-datagrid-content {
+	border: none !important;
+	}  
+
+.ui-messages {
+    width: auto;
+    margin: 0 auto !important;
+}
+
+/* customizacao das mensagens em tela */
+.ui-messages-error {
+    margin: 5px 0 10px 0 !important;
+    border: 1px solid #eee !important;
+    border-left-width: 5px !important;
+    border-radius: 3px !important;
+    border-left-color: #d9534f !important;
+    background-color: rgba(217, 83, 79, 0.1) !important;
+}
+.ui-messages-warn {
+    margin: 5px 0 10px 0 !important;
+    border: 1px solid #eee !important;
+    border-left-width: 5px !important;
+    border-radius: 3px !important;
+    border-left-color: #f0ad4e !important;
+    background-color: rgba(240, 173, 78, 0.1) !important;
+}
+.ui-messages-info {
+    margin: 5px 0 10px 0 !important;
+    border: 1px solid #eee !important;
+    border-left-width: 5px !important;
+    border-radius: 3px !important;
+    border-left-color: #5bc0de !important;
+    background-color: rgba(91, 192, 222, 0.1) !important;
+}

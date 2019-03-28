@@ -1,0 +1,124 @@
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">TESTE</ui:define>
+
+	<ui:define name="centro">
+		<f:metadata>
+			<o:viewParam name="recibo" value="#{cadastroReciBean.conta.contrato}" />
+			<f:event listener="#{cadastroReciBean.inicializar}"
+				type="preRenderView" />
+			<f:viewParam name="damy" />
+		</f:metadata>
+
+		<p:panel header="Cadastro de Recibos" style="text-align:left">
+
+			<h:form id="frmCadastro" prependId="false">
+
+				<p:messages autoUpdate="true" closable="true" />
+
+				<ui:include src="/WEB-INF/recibo/BotoesRecibos.xhtml" />
+
+				<p:panelGrid columns="4" id="painelRecibo"
+					style="width: 100%; margin-top:4px"
+					columnClasses="rotulo, campo, rotulo, campo">
+
+					<p:outputLabel value="Convênio Nrº" for="codigo" />
+					<p:inputText id="codigo"
+						value="#{cadastroReciBean.convenio.id_contrato}">
+						<p:ajax event="change" update="codigo cliente tbConta"
+							listener="#{cadastroReciBean.consultaPorId}">
+						</p:ajax>
+					</p:inputText>
+
+					<p:outputLabel value="Cliente" for="cliente" />
+					<h:outputText id="cliente"
+						value="#{cadastroReciBean.conta.contrato.cliente.nome}" />
+
+					<p:outputLabel value="Data de Vencimento" for="vencimento" />
+					<p:calendar id="vencimento" showButtonPanel="true" size="6"
+						mask="true" value="#{cadastroReciBean.conta.dt_vencimento}"
+						showOn="button" type="button" pattern="dd/MM/yyyy">
+					</p:calendar>
+
+					<p:outputLabel value="Valor" for="valor" />
+					<h:inputText id="valor" onfocus="maskMoney(this)"
+						value="#{cadastroReciBean.conta.vlr}">
+						<f:convertNumber pattern="#,##0.00" />
+					</h:inputText>
+
+					<p:outputLabel value="Forma de pagamento" for="pgto" />
+					<p:selectOneMenu id="pgto"
+						value="#{cadastroReciBean.conta.tipopgto}">
+						<f:selectItem itemLabel="Nenhum" itemValue="Nunhum" />
+						<f:selectItem itemLabel="Cartão de crédito"
+							itemValue="Cartão de crédito" />
+						<f:selectItem itemLabel="Boleto" itemValue="Boleto" />
+						<f:selectItem itemLabel="Depósito em Conta"
+							itemValue="Depósito em Conta" />
+						<f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
+						<f:selectItem itemLabel="Transferência" itemValue="Transferência" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+
+				<p:spacer />
+
+				<p:panelGrid columns="1">
+					<p:commandButton value="Gerar Recibo" icon="usd"
+						action="#{cadastroReciBean.incluirRecibo}"
+						update=":frmCadastro:painelRecibo :frmCadastro:tbConta @this" />
+
+				</p:panelGrid>
+
+				<p:spacer />
+
+				<p:dataTable id="tbConta" rowIndexVar="linha"
+					value="#{cadastroReciBean.convenio.contas}" var="contas">
+
+					<p:column headerText="Emissão"
+						style="text-align: center; width: 100px">
+						<h:outputText value="#{contas.dt_emissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Vencimento"
+						style="text-align: center; width: 100px">
+						<h:outputText value="#{contas.dt_vencimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Valor do Recibo"
+						style="text-align: center; width: 100px">
+						<h:outputText value="#{contas.vlr}">
+							<f:convertNumber type="currency" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Status Recibo"
+						style="text-align: center; width: 100px">
+						<h:outputText value="#{contas.status}" />
+
+					</p:column>
+
+					<p:column headerText="Ações" width="5%" style="text-align:center">
+						<p:commandButton title="Remover" process="@this"
+							action="#{cadastroReciBean.removerRecibo(contas, linha)}"
+							update="tbConta" icon="delete-icon">
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
+

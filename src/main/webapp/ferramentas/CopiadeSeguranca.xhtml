@@ -1,0 +1,57 @@
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">TESTE</ui:define>
+
+	<ui:define name="centro">
+		<p:panel header="Cópia de Segurança do Banco" style="text-align:left"
+			id="painelSeguranca">
+
+			<p:tabView style="margin-top: 10px" id="tabPanelWidget"
+				dynamic="true" cache="false">
+				<p:tab id="tabBackup" title="Backup">
+					<h:form id="frmBackup" prependId="false">
+						<p:messages autoUpdate="true" closable="true" />
+						<p:toolbar style="margin-top: 20px">
+							<p:toolbarGroup>
+								<p:commandButton value="Realizar Backup"
+									action="#{confirmaBackup.fazBackup}" />
+							</p:toolbarGroup>
+						</p:toolbar>
+					</h:form>
+				</p:tab>
+
+				<p:tab id="tabRestore" title="Restauração de banco">
+					<h:form id="frmRestore" prependId="false">
+						<p:messages autoUpdate="true" closable="true" />
+						<p:toolbar style="margin-top: 20px">
+							<p:toolbarGroup>
+								<p:commandButton value="Restauração de banco"
+									action="#{confirmaBackup.restoreBackup}" />
+							</p:toolbarGroup>
+						</p:toolbar>
+
+						<p:panelGrid columns="2" id="panel"
+							style="width: 100%; margin-top: 20px"
+							columnClasses="rotulo, campo">
+							<h:outputLabel for="basic" value="Arquivo:" />
+							<p:inplace id="basic" editor="true">
+								<p:inputText value="#{confirmaBackup.arquivo}"
+									required="true" label="texto" />
+							</p:inplace>
+
+						</p:panelGrid>
+
+					</h:form>
+				</p:tab>
+
+			</p:tabView>
+		</p:panel>
+	</ui:define>
+
+</ui:composition>
+

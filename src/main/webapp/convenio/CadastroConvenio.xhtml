@@ -1,0 +1,134 @@
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">TESTE</ui:define>
+
+	<ui:define name="centro">
+		<f:metadata>
+			<f:viewParam name="damy" />
+			<o:viewParam name="cliente" value="#{cadastroConvenioBean.convenio}" />
+		</f:metadata>
+
+		<p:panel header="Cadastro de Convênio" style="text-align:left">
+
+			<h:form id="frmCadastro" prependId="false">
+
+				<p:messages autoUpdate="true" closable="true" />
+
+				<ui:include src="/WEB-INF/convenio/BotoesCadastroConvenio.xhtml" />
+
+				<p:panelGrid columns="4" id="painelConvenio"
+					style="width: 100%; margin-top: 20px"
+					columnClasses="rotulo, campo, rotulo, campo">
+
+					<p:outputLabel value="Cliente" for="cliente" />					
+					<h:panelGroup>
+					<p:autoComplete id="cliente" disabled="#{cadastroConvenioBean.convenio.emitido}" dropdown="false"
+						value="#{cadastroConvenioBean.convenio.cliente}" size="50" placeholder="Pesquise por nome ou cpf"
+						completeMethod="#{cadastroConvenioBean.completarCliente}"
+						var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}"
+						forceSelection="true">
+					<p:column>
+               		<h:outputText value="#{cliente.nome}"/>
+            		</p:column>
+ 
+            		<p:column>
+                	<h:outputText value="#{cliente.cpf}" />
+            		</p:column>
+						
+					</p:autoComplete>						
+					</h:panelGroup>
+					
+
+					<p:outputLabel value="Código"
+						rendered="#{cadastroConvenioBean.convenio.existente}" />
+					<h:outputText value="#{cadastroConvenioBean.convenio.id_contrato}"
+						rendered="#{cadastroConvenioBean.convenio.existente}" />
+
+					<p:outputLabel value="Data de Emissao" for="dtemissao" />
+							<p:calendar id="dtemissao" locale="pt_BR" showButtonPanel="true" disabled="#{cadastroConvenioBean.convenio.emitido}"
+								value="#{cadastroConvenioBean.convenio.data}" size="7"
+								pattern="dd/MM/yyyy" mask="true" showOn="button">
+							</p:calendar>
+
+					<p:outputLabel value="Status" />
+					<h:outputText value="#{cadastroConvenioBean.convenio.status}" />
+
+
+				</p:panelGrid>
+
+			</h:form>
+		</p:panel>
+
+		<p:spacer />
+
+		<p:panel header="Pesquisar Convênio" style="text-align:left">
+
+			<h:form id="frmPesquisa" prependId="false" target="_blank">
+
+				<ui:include src="/WEB-INF/convenio/BotoesPesquisaConvenio.xhtml" />
+
+				<p:panelGrid columns="4" id="painelPesquisa"
+					style="width: 100%; margin-top: 20px"
+					columnClasses="rotulo, campo, rotulo, campo">
+
+					<p:outputLabel value="Cliente" for="consulta" />
+					<p:autoComplete id="consulta"
+						value="#{pesquisaClienteBean.cliente}" size="50"
+						completeMethod="#{pesquisaClienteBean.completarCliente}"
+						var="consulta" itemLabel="#{consulta.nome}"
+						itemValue="#{consulta}" forceSelection="true">
+					</p:autoComplete>
+
+				</p:panelGrid>
+
+				<p:dataTable id="clienteTable" var="listcliente"
+					selectionMode="single" selection="#{cadastroConvenioBean.convenio}"
+					rowKey="#{listcliente.id_contrato}"
+					value="#{pesquisaClienteBean.convenios}"
+					style="margin-top: 20px" emptyMessage="Nenhum Convênio encontrado."
+					rows="5" rowIndexVar="rowIndex" paginator="true"
+					paginatorAlwaysVisible="false" paginatorPosition="bottom"
+					styleClass="semBorda">
+
+					<p:ajax event="rowSelect" update=":frmCadastro" />
+
+					<p:column headerText="Código" width="50">
+						<h:outputText value="#{listcliente.id_contrato}" />
+					</p:column>
+					<p:column headerText="Data Emissão" style="width: 80px">
+						<h:outputText value="#{listcliente.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Status" style="text-align: center">
+						<h:outputText value="#{listcliente.status}" />
+					</p:column>
+					<p:column style="text-align: center" headerText="Ações">
+						<p:commandButton icon="imprimir-icon" title="Página 1 Contrato"
+							 disabled="#{listcliente.inicial or listcliente.cancelado}"
+							action="#{cadastroConvenioBean.imprimirContrato1(listcliente.id_contrato)}"
+							ajax="false" />
+						<p:commandButton icon="imprimir-icon" title="Página 2 Contrato"
+							 disabled="#{listcliente.inicial or listcliente.cancelado}"
+							action="#{cadastroConvenioBean.imprimirContrato2(listcliente.id_contrato)}"
+							ajax="false" />
+						<p:button outcome="/recibo/CadastroRecibo" icon="usd" title="Gerar Recibos"
+							 disabled="#{listcliente.inicial or listcliente.cancelado}">
+							<f:param name="recibo" value="#{listcliente.id_contrato}"/>
+						</p:button>
+					</p:column>
+				</p:dataTable>
+
+			</h:form>
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
+
