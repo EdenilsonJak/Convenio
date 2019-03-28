@@ -1,2 +1,2 @@
-# Convenio SantaRosa 
+# Convênio SantaRosa 
 Tecnologias Utilizadas: JAVA: V1.8 "COMPILAÇÃO" JSF V2.3 HIBERNATE: V5.2 PRIMEFACES: V5.1 SPRING SECURITY: V3.2 MYSQL: V5.1
